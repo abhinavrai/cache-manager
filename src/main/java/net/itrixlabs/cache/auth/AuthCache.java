@@ -14,9 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.itrixlabs.it.cache.auth;
+package net.itrixlabs.cache.auth;
 
-import org.itrixlabs.it.cache.core.ApplicationCache;
+import net.itrixlabs.cache.core.ApplicationCache;
 
 public interface AuthCache extends ApplicationCache {
 

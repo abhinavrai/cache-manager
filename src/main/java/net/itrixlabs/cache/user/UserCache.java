@@ -14,9 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.itrixlabs.it.cache.user;
+package net.itrixlabs.cache.user;
 
-import org.itrixlabs.it.cache.core.ApplicationCache;
+import net.itrixlabs.cache.core.ApplicationCache;
 
 public interface UserCache extends ApplicationCache {
 

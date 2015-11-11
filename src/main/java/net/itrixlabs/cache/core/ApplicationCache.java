@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.itrixlabs.it.cache.core;
+package net.itrixlabs.cache.core;
 
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -45,7 +45,7 @@ import org.springframework.beans.factory.InitializingBean;
  * </p>
  * 
  * @author Abhinav Rai
- * @since October 16<sup>th</sup>, 2015
+ * @since November 10<sup>th</sup>, 2015
  *
  */
 public abstract interface ApplicationCache extends InitializingBean, DisposableBean {
