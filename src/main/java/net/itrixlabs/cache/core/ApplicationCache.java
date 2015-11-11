@@ -48,20 +48,73 @@ import org.springframework.beans.factory.InitializingBean;
  * @since November 10<sup>th</sup>, 2015
  *
  */
-public abstract interface ApplicationCache extends InitializingBean, DisposableBean {
+public abstract interface ApplicationCache<K, V> extends InitializingBean, DisposableBean {
 
     /**
      * <p>
-     * Initializes the application cache. Can make use of a data-store for pre-fetching already
-     * stored application data (if required) typically upon container restart.
+     * Initializes the application cache (doesn't create it). Can make use of a data-store for
+     * pre-fetching already stored application data (if required) typically upon container restart.
+     * </p>
+     * <p>
+     * Each type of application cache is initialized separately in order to maintain sanity and
+     * usage simplicity. Thus, please be advised that a cache type must be instantiated &amp;
+     * initialized manually before use (manually just means that extra code is required for the
+     * same).
      * </p>
      */
     void initialize();
 
     /**
      * <p>
-     * Flushes the application cache. Note that flushing an application cache doesn't mean it is
-     * destroyed. It may just be reduced in size or cleared in order to re-claim memory.
+     * Obtains a stored entry from the cache. Implementations must make sure not to throw an
+     * exception even if one occurs here.
+     * </p>
+     * 
+     * @param key
+     *            the unique identifier to use for fetching the entry; be advised that the same
+     *            identifier must be used for saving the details into the cache
+     * @return a populated entry object containing enough information to facilitate the function it
+     *         is required for; if none is found
+     */
+    public abstract V getFromCache(K key);
+
+    /**
+     * <p>
+     * Places an entry in the cache. The <code>key</code> is the identifier used to subsequently
+     * retrieve the entry.
+     * </p>
+     * 
+     * @param key
+     *            the key corresponding to which entry must be stored in the cache
+     * @param entry
+     *            the object entry to place into the cache
+     */
+    public abstract void putInCache(K key, V entry);
+
+    /**
+     * Removes the specified entry from the cache. The <code>key</code> is the identifier used to
+     * remove the entry. If the entry is not found, the method should simply return (not throw an
+     * exception).
+     * <p>
+     * Some cache implementations may not support eviction from the cache, in which case they should
+     * provide appropriate behavior to alter the token in either its documentation, via an
+     * exception, or through a log message.
+     *
+     * @param key
+     *            the predefined key/identifier for evicting an entry from the cache
+     */
+    public abstract void evictFromCache(K key);
+
+    /**
+     * <p>
+     * Flushes the application cache (doesn't destroy it). Note that flushing an application cache
+     * doesn't mean it is destroyed. It may just be reduced in size or cleared in order to re-claim
+     * memory.
+     * </p>
+     * <p>
+     * Each type of application cache is flushed separately in order to maintain sanity and usage
+     * simplicity. Thus, please be advised that a cache type must be flushed &amp; manually whenever
+     * required (manually just means that extra code is required for the same).
      * </p>
      */
     void flush();

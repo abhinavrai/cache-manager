@@ -14,10 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.itrixlabs.cache.user;
+package net.itrixlabs.cache.ext;
 
-import net.itrixlabs.cache.core.ApplicationCache;
+/**
+ * <p>
+ * Named constants describing the types of caches supported by the cache manager out of the box.
+ * </p>
+ * 
+ * @author Abhinav Rai
+ * @since November 11<sup>th</sup>, 2015
+ *
+ */
+public enum CacheType {
 
-public interface UserCache extends ApplicationCache {
+    AUTH, CSRF, USER;
 
+    public String toString() {
+	return name().toLowerCase();
+    };
 }

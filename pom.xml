@@ -3,14 +3,14 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.itrixlabs.it</groupId>
+  <groupId>net.itrixlabs</groupId>
   <artifactId>cache-manager</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
   <name>Cache Manager</name>
   <description>
     Efficient cache management implementation for Spring Security infrastructure.
   </description>
-  <url>https://it.itrixlabs.org</url>
+  <url>https://it.itrixlabs.net</url>
   <licenses>
     <license>
       <name>The Apache License, Version 2.0</name>
@@ -20,11 +20,16 @@
   <developers>
     <developer>
       <name>Abhinav Rai</name>
-      <email>abhirai.2000@gmail.com</email>
+      <email>abhinav.rai@itrixlabs.net</email>
       <organization>Individual Contributer</organization>
-      <organizationUrl>https://it.itrixlabs.org</organizationUrl>
+      <organizationUrl>https://it.itrixlabs.net</organizationUrl>
     </developer>
   </developers>
+  <scm>
+    <connection>scm:git:git@github.com:abhinavrai/cache-manager.git</connection>
+    <developerConnection>scm:git:git@github.com:abhinavrai/cache-manager.git</developerConnection>
+    <url>git@github.com:abhinavrai/cache-manager.git</url>
+  </scm>
 
   <!-- START: Component versions and properties -->
   <properties>
@@ -163,7 +168,7 @@
         </configuration>
       </plugin>
     </plugins>
-    <finalName>cache-manager-${version}</finalName>
+    <finalName>cache-manager-${project.version}</finalName>
   </build>
   <!-- END: Build configuration and description -->
 </project>
