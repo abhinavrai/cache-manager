@@ -43,7 +43,7 @@ import net.itrixlabs.cache.util.Assert;
  * </p>
  * 
  * @author Abhinav Rai
- * @since November 11<supth</sup>, 2015
+ * @since November 11<sup>th</sup>, 2015
  * @see ApplicationCache
  *
  */
@@ -106,7 +106,7 @@ public abstract class AbstractFileSystemCache<K, V>
 		new FileInputStream(cacheLocation))) {
 	    this.cache.putAll((Map<? extends K, ? extends V>) objectInputStream.readObject());
 	} catch (FileNotFoundException e) {
-	    logger.info(this.cache + " cache doesn't exist! Creating a brand new one.");
+	    logger.info(this.type.toString() + " cache doesn't exist! Creating a brand new one.");
 	    File fileSystemCacheDir = new File(this.cacheDir);
 	    if (fileSystemCacheDir.exists())
 		fileSystemCacheDir.setWritable(true);
@@ -128,13 +128,14 @@ public abstract class AbstractFileSystemCache<K, V>
 	    }
 	} catch (IOException | ClassNotFoundException e) {
 	    if (e instanceof IOException)
-		logger.warn(this.cache + " cache was tampered with!"
+		logger.warn(this.type.toString() + " cache was tampered with!"
 			+ " Trust us, this is the last thing you want to do."
 			+ " By design, this cannot be done by an attacker."
 			+ " So, if it was a clean-up activity or a rougue administrator,"
 			+ " you have been warned!");
 	    else
-		logger.error("Cache implementation has changed from last invocation."
+		logger.error(this.type.toString()
+			+ " cache implementation has changed from last invocation."
 			+ " Delete the cache manually and re-create."
 			+ " Automatic recovery will be supported in future releases.");
 	}
@@ -185,7 +186,7 @@ public abstract class AbstractFileSystemCache<K, V>
      * Sets the cache filename to use with the particular type of cache in focus.
      * </p>
      * 
-     * @param cacheDir
+     * @param cacheFile
      *            the cache filename to use
      * @return <code>AbstractFileSystemCache</code> for further customization
      */

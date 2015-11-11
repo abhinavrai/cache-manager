@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.itrixlabs.cache.user;
+package net.itrixlabs.cache.csrf;
 
 import static org.springframework.security.core.SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
@@ -23,22 +23,22 @@ import net.itrixlabs.cache.ext.CacheType;
 
 /**
  * <p>
- * Efficient implementation of <code>ApplicationCache</code> for authentication sub-systems.
+ * Efficient implementation of <code>ApplicationCache</code> for CSRF Filters.
  * </p>
  * 
  * @author Abhinav Rai
  * @since November 11<sup>th</sup>, 2015
  *
  */
-public class SerializableUserCache<K, V> extends AbstractFileSystemCache<K, V> {
+public class SerializableCsrfCache<K, V> extends AbstractFileSystemCache<K, V> {
 
     private static final long serialVersionUID = SERIAL_VERSION_UID;
 
-    public SerializableUserCache(CacheType type) {
+    public SerializableCsrfCache(CacheType type) {
 	super(type);
     }
 
-    public SerializableUserCache(CacheType type, String cacheDir, String cacheFile) {
+    public SerializableCsrfCache(CacheType type, String cacheDir, String cacheFile) {
 	super(type, cacheDir, cacheFile);
     }
 
