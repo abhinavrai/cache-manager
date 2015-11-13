@@ -46,6 +46,7 @@ public class CacheManager<U, A, C> implements InitializingBean, DisposableBean {
     public CacheManager() {
 	this.cacheManagementExecutor = (ScheduledThreadPoolExecutor) Executors
 		.newScheduledThreadPool(10);
+	this.cacheManagementWorker = new CacheManagementWorker<>();
     }
 
     @Override
