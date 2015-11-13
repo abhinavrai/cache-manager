@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.itrixlabs.cache.ext;
+package net.itrixlabs.cache.core;
 
 import static java.lang.System.currentTimeMillis;
 import static net.itrixlabs.cache.config.Key.DEFAULT_TTL;
@@ -41,7 +41,6 @@ import org.apache.commons.logging.LogFactory;
 import net.itrixlabs.cache.config.CacheKey;
 import net.itrixlabs.cache.config.CacheType;
 import net.itrixlabs.cache.config.Key;
-import net.itrixlabs.cache.core.ApplicationCache;
 import net.itrixlabs.cache.util.Assert;
 
 /**

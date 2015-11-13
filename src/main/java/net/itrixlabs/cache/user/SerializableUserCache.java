@@ -19,7 +19,7 @@ package net.itrixlabs.cache.user;
 import static org.springframework.security.core.SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
 import net.itrixlabs.cache.config.CacheType;
-import net.itrixlabs.cache.ext.AbstractFileSystemCache;
+import net.itrixlabs.cache.core.AbstractFileSystemCache;
 
 /**
  * <p>
