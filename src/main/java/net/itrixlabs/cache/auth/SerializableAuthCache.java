@@ -18,8 +18,8 @@ package net.itrixlabs.cache.auth;
 
 import static org.springframework.security.core.SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
+import net.itrixlabs.cache.config.CacheType;
 import net.itrixlabs.cache.ext.AbstractFileSystemCache;
-import net.itrixlabs.cache.ext.CacheType;
 
 /**
  * <p>
@@ -30,7 +30,7 @@ import net.itrixlabs.cache.ext.CacheType;
  * @since November 11<sup>th</sup>, 2015
  *
  */
-public class SerializableAuthCache<K, V> extends AbstractFileSystemCache<K, V> {
+public class SerializableAuthCache<V> extends AbstractFileSystemCache<V> {
 
     private static final long serialVersionUID = SERIAL_VERSION_UID;
 
@@ -43,17 +43,17 @@ public class SerializableAuthCache<K, V> extends AbstractFileSystemCache<K, V> {
     }
 
     @Override
-    public V getFromCache(K key) {
-	return super.cache.get(key);
+    public V getFromCache(Object key) {
+	return super.cache.get(super.generate(key));
     }
 
     @Override
-    public void putInCache(K key, V entry) {
-	super.cache.putIfAbsent(key, entry);
+    public void putInCache(Object key, V entry) {
+	super.cache.putIfAbsent(super.generate(key), entry);
     }
 
     @Override
-    public void evictFromCache(K key) {
-	super.cache.remove(key);
+    public void evictFromCache(Object key) {
+	super.cache.remove(super.generate(key));
     }
 }

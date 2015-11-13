@@ -22,7 +22,8 @@ import org.springframework.beans.factory.InitializingBean;
 /**
  * <p>
  * Primordial interface for maintaining application cache. In contrast to other cache providers,
- * this type of cache ensures type checking and provides efficient caching for a distributed system.
+ * this type of cache ensures type checking and specifies efficient caching for a distributed
+ * systems. However, implementations can be focused upon non-distributed systems too.
  * </p>
  * <p>
  * Implementations should provide appropriate methods to set their cache parameters (e.g.
@@ -48,7 +49,7 @@ import org.springframework.beans.factory.InitializingBean;
  * @since November 10<sup>th</sup>, 2015
  *
  */
-public abstract interface ApplicationCache<K, V> extends InitializingBean, DisposableBean {
+public abstract interface ApplicationCache<Key, V> extends InitializingBean, DisposableBean {
 
     /**
      * <p>
@@ -76,7 +77,7 @@ public abstract interface ApplicationCache<K, V> extends InitializingBean, Dispo
      * @return a populated entry object containing enough information to facilitate the function it
      *         is required for; if none is found
      */
-    public abstract V getFromCache(K key);
+    V getFromCache(Object key);
 
     /**
      * <p>
@@ -89,7 +90,7 @@ public abstract interface ApplicationCache<K, V> extends InitializingBean, Dispo
      * @param entry
      *            the object entry to place into the cache
      */
-    public abstract void putInCache(K key, V entry);
+    void putInCache(Object key, V entry);
 
     /**
      * Removes the specified entry from the cache. The <code>key</code> is the identifier used to
@@ -103,7 +104,7 @@ public abstract interface ApplicationCache<K, V> extends InitializingBean, Dispo
      * @param key
      *            the predefined key/identifier for evicting an entry from the cache
      */
-    public abstract void evictFromCache(K key);
+    void evictFromCache(Object key);
 
     /**
      * <p>

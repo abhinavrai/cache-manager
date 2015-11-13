@@ -5,12 +5,12 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.itrixlabs</groupId>
   <artifactId>cache-manager</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4.RELEASE</version>
   <name>Cache Manager</name>
   <description>
-    Efficient cache management implementation for Spring Security infrastructure.
+    Efficient cache management implementation for Spring Security (Stateless Scenarios).
   </description>
-  <url>https://it.itrixlabs.net</url>
+  <url>http://it.itrixlabs.net</url>
   <licenses>
     <license>
       <name>The Apache License, Version 2.0</name>
@@ -21,14 +21,19 @@
     <developer>
       <name>Abhinav Rai</name>
       <email>abhinav.rai@itrixlabs.net</email>
+      <id>N/A</id>
+      <roles>
+        <role>Architect</role>
+        <role>Contributor</role>
+      </roles>
       <organization>Individual Contributer</organization>
-      <organizationUrl>https://it.itrixlabs.net</organizationUrl>
+      <organizationUrl>http://it.itrixlabs.net</organizationUrl>
     </developer>
   </developers>
   <scm>
-    <connection>scm:git:git@github.com:abhinavrai/cache-manager.git</connection>
-    <developerConnection>scm:git:git@github.com:abhinavrai/cache-manager.git</developerConnection>
-    <url>git@github.com:abhinavrai/cache-manager.git</url>
+    <connection>scm:git:git@github.com:itrixlabs/cache-manager.git</connection>
+    <developerConnection>scm:git:git@github.com:itrixlabs/cache-manager.git</developerConnection>
+    <url>git@github.com:itrixlabs/cache-manager.git</url>
   </scm>
 
   <!-- START: Component versions and properties -->
@@ -36,55 +41,20 @@
     <jdk.version>1.8</jdk.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <spring.version>4.2.1.RELEASE</spring.version>
     <spring.security.version>4.0.2.RELEASE</spring.security.version>
-    <commons.codec.version>1.10</commons.codec.version>
     <commons.logging.version>1.2</commons.logging.version>
     <junit.version>4.12</junit.version>
-    <mockito.version>1.10.19</mockito.version>
   </properties>
   <!-- END: Component versions and properties -->
-  <!-- START: Dependency management (BOM) -->
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-framework-bom</artifactId>
-        <version>${spring.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework.security</groupId>
-        <artifactId>spring-security-bom</artifactId>
-        <version>${spring.security.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-  <!-- START: Dependency management (BOM) -->
   <!-- START: Dependency section -->
   <dependencies>
-    <!-- START: Spring Framework 4 dependencies -->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-core</artifactId>
-    </dependency>
-    <!-- END: Spring Framework 4 dependencies -->
     <!-- START: Spring Security 4 dependencies -->
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-core</artifactId>
+      <version>${spring.security.version}</version>
     </dependency>
     <!-- END: Spring Security 4 dependencies -->
-    <!-- START: Miscellaneous dependencies -->
-    <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
-      <version>${commons.codec.version}</version>
-    </dependency>
-    <!-- END: Miscellaneous dependencies -->
     <!-- START: Logging dependencies -->
     <dependency>
       <groupId>commons-logging</groupId>
@@ -97,12 +67,6 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
-      <version>${mockito.version}</version>
       <scope>test</scope>
     </dependency>
     <!-- END: Testing dependencies -->

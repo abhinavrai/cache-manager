@@ -16,6 +16,9 @@
  */
 package net.itrixlabs.cache.ext;
 
+import static java.lang.System.currentTimeMillis;
+import static net.itrixlabs.cache.config.Key.DEFAULT_TTL;
+import static net.itrixlabs.cache.config.Key.DEFAULT_TTL_TIMEUNIT;
 import static org.springframework.security.core.SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
 import java.io.File;
@@ -26,13 +29,18 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import net.itrixlabs.cache.config.CacheKey;
+import net.itrixlabs.cache.config.CacheType;
+import net.itrixlabs.cache.config.Key;
 import net.itrixlabs.cache.core.ApplicationCache;
 import net.itrixlabs.cache.util.Assert;
 
@@ -47,8 +55,7 @@ import net.itrixlabs.cache.util.Assert;
  * @see ApplicationCache
  *
  */
-public abstract class AbstractFileSystemCache<K, V>
-	implements ApplicationCache<K, V>, Serializable {
+public abstract class AbstractFileSystemCache<V> implements ApplicationCache<Key, V>, Serializable {
 
     private static final long serialVersionUID = SERIAL_VERSION_UID;
 
@@ -58,6 +65,16 @@ public abstract class AbstractFileSystemCache<K, V>
      * Represents the cache type (from the ones which are currently supported)
      */
     private CacheType type;
+
+    /*
+     * Specifies the TTL of an entry in the cache
+     */
+    private Long ttl = DEFAULT_TTL;
+
+    /*
+     * TimeUnit for the ttl period
+     */
+    private TimeUnit ttlUnit = DEFAULT_TTL_TIMEUNIT;
 
     /*
      * Represents the directory for setting-up the cache directory
@@ -74,7 +91,7 @@ public abstract class AbstractFileSystemCache<K, V>
      */
     private String cacheLocation;
 
-    protected final ConcurrentMap<K, V> cache = new ConcurrentHashMap<>();
+    protected final ConcurrentMap<Key, V> cache = new ConcurrentHashMap<>();
 
     public AbstractFileSystemCache() {
 
@@ -104,7 +121,7 @@ public abstract class AbstractFileSystemCache<K, V>
     public void initialize() {
 	try (ObjectInputStream objectInputStream = new ObjectInputStream(
 		new FileInputStream(cacheLocation))) {
-	    this.cache.putAll((Map<? extends K, ? extends V>) objectInputStream.readObject());
+	    this.cache.putAll((Map<Key, ? extends V>) objectInputStream.readObject());
 	} catch (FileNotFoundException e) {
 	    logger.info(this.type.toString() + " cache doesn't exist! Creating a brand new one.");
 	    File fileSystemCacheDir = new File(this.cacheDir);
@@ -141,10 +158,22 @@ public abstract class AbstractFileSystemCache<K, V>
 	}
     }
 
+    protected Key generate(Object identifier) {
+	Key key = new CacheKey();
+	key.setKey(identifier);
+	key.setCreationTime(currentTimeMillis());
+	return key;
+    }
+
     @Override
     public void flush() {
-	if (this.cache.size() > 640)
-	    this.cache.clear();
+	long ttlMillis = ttlUnit.toMillis(ttl);
+	Iterator<Key> iter = this.cache.keySet().iterator();
+	while (iter.hasNext()) {
+	    Key key = (Key) iter.next();
+	    if (key.getCreationTime() < System.currentTimeMillis() - ttlMillis)
+		cache.remove(key);
+	}
     }
 
     @Override
@@ -169,6 +198,36 @@ public abstract class AbstractFileSystemCache<K, V>
 
     /**
      * <p>
+     * Sets the time-to-live for an entry in cache.
+     * </p>
+     * 
+     * @param ttl
+     *            the ttl to set
+     * @return <code>AbstractFileSystemCache</code> for further customization
+     */
+    public AbstractFileSystemCache<V> setTtl(Long ttl) {
+	Assert.assertNotNull(ttl, "Can't accept null as TTL.");
+	this.ttl = ttl;
+	return this;
+    }
+
+    /**
+     * <p>
+     * Sets the time unit for cache entry time-to-live strategy.
+     * </p>
+     * 
+     * @param ttlUnit
+     *            the ttl time unit to set
+     * @return <code>AbstractFileSystemCache</code> for further customization
+     */
+    public AbstractFileSystemCache<V> setTtlUnit(TimeUnit ttlUnit) {
+	Assert.assertNotNull(ttlUnit, "Can't accept null as TTL TimeUnit.");
+	this.ttlUnit = ttlUnit;
+	return this;
+    }
+
+    /**
+     * <p>
      * Sets the cache directory location to use with the particular type of cache in focus.
      * </p>
      * 
@@ -176,7 +235,8 @@ public abstract class AbstractFileSystemCache<K, V>
      *            the cache directory location to use
      * @return <code>AbstractFileSystemCache</code> for further customization
      */
-    public AbstractFileSystemCache<K, V> setCacheDir(String cacheDir) {
+    public AbstractFileSystemCache<V> setCacheDir(String cacheDir) {
+	Assert.assertNotEmpty(cacheDir, "A cache directory location is required.");
 	this.cacheDir = cacheDir;
 	return this;
     }
@@ -190,7 +250,8 @@ public abstract class AbstractFileSystemCache<K, V>
      *            the cache filename to use
      * @return <code>AbstractFileSystemCache</code> for further customization
      */
-    public AbstractFileSystemCache<K, V> setCacheFile(String cacheFile) {
+    public AbstractFileSystemCache<V> setCacheFile(String cacheFile) {
+	Assert.assertNotEmpty(cacheFile, "A cache filename is required.");
 	this.cacheFile = cacheFile;
 	return this;
     }
