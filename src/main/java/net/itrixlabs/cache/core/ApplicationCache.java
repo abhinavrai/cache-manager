@@ -70,6 +70,15 @@ public abstract interface ApplicationCache<Key, V> extends InitializingBean, Dis
      * Obtains a stored entry from the cache. Implementations must make sure not to throw an
      * exception even if one occurs here.
      * </p>
+     * <p>
+     * <b><i>Important:</i></b>&nbsp;<i>Note that you may use any well known java type as key like
+     * {@link java.lang.Long} or {@link java.lang.String} or a custom type as long as it abides by
+     * the contract defined by the {@link net.itrixlabs.cache.config.Key} interface, i.e., the key
+     * should be uniquely identifiable using its value and not the <code>Key</code> instance as
+     * whole. In short, you must override the {@link #equals(Object)} and {@link #hashCode()}
+     * methods of that particular key type to make sure your identifier can be uniquely
+     * distinguished from with-in the cache.</i>
+     * </p>
      * 
      * @param key
      *            the unique identifier to use for fetching the entry; be advised that the same
@@ -84,6 +93,15 @@ public abstract interface ApplicationCache<Key, V> extends InitializingBean, Dis
      * Places an entry in the cache. The <code>key</code> is the identifier used to subsequently
      * retrieve the entry.
      * </p>
+     * <p>
+     * <b><i>Important:</i></b>&nbsp;<i>Note that you may use any well known java type as key like
+     * {@link java.lang.Long} or {@link java.lang.String} or a custom type as long as it abides by
+     * the contract defined by the {@link net.itrixlabs.cache.config.Key} interface, i.e., the key
+     * should be uniquely identifiable using its value and not the <code>Key</code> instance as
+     * whole. In short, you must override the {@link #equals(Object)} and {@link #hashCode()}
+     * methods of that particular key type to make sure your identifier can be uniquely
+     * distinguished from with-in the cache.</i>
+     * </p>
      * 
      * @param key
      *            the key corresponding to which entry must be stored in the cache
@@ -93,13 +111,25 @@ public abstract interface ApplicationCache<Key, V> extends InitializingBean, Dis
     void putInCache(Object key, V entry);
 
     /**
+     * <p>
      * Removes the specified entry from the cache. The <code>key</code> is the identifier used to
      * remove the entry. If the entry is not found, the method should simply return (not throw an
      * exception).
+     * </p>
      * <p>
      * Some cache implementations may not support eviction from the cache, in which case they should
      * provide appropriate behavior to alter the token in either its documentation, via an
      * exception, or through a log message.
+     * </p>
+     * <p>
+     * <b><i>Important:</i></b>&nbsp;<i>Note that you may use any well known java type as key like
+     * {@link java.lang.Long} or {@link java.lang.String} or a custom type as long as it abides by
+     * the contract defined by the {@link net.itrixlabs.cache.config.Key} interface, i.e., the key
+     * should be uniquely identifiable using its value and not the <code>Key</code> instance as
+     * whole. In short, you must override the {@link #equals(Object)} and {@link #hashCode()}
+     * methods of that particular key type to make sure your identifier can be uniquely
+     * distinguished from with-in the cache.</i>
+     * </p>
      *
      * @param key
      *            the predefined key/identifier for evicting an entry from the cache

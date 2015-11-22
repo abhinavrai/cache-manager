@@ -46,11 +46,41 @@ public interface Key {
 
     Long DEFAULT_CACHE_MAX_SIZE = 640L;
 
+    /**
+     * <p>
+     * Gets the key descriptor from the cache implementation.
+     * </p>
+     * 
+     * @return the key
+     */
     Object getKey();
-    
+
+    /**
+     * <p>
+     * Sets the key descriptor to the cache implementation.
+     * </p>
+     * 
+     * @param identifier
+     *            the actual key identifier to be associated with an entry in the cache.
+     */
     void setKey(Object identifier);
 
+    /**
+     * <p>
+     * Returns the creation time for an entry in the cache.
+     * </p>
+     * 
+     * @return the cache creation time in millis
+     */
     Long getCreationTime();
-    
+
+    /**
+     * <p>
+     * Sets the creation time for an entry in the cache.
+     * </p>
+     * 
+     * @param creationTime
+     *            the creation time to set in millis
+     */
     void setCreationTime(Long creationTime);
 }

@@ -8,11 +8,9 @@ import org.junit.Test;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 
-import net.itrixlabs.cache.config.CacheType;
-
 public class SerializableUserCacheTest {
 
-    private SerializableUserCache<User> userCache = new SerializableUserCache<>(CacheType.USER);
+    private SerializableUserCache<User> userCache = new SerializableUserCache<>();
 
     private User actualUser1, actualUser2, actualUser3;
     private String keyString1, keyString2, keyString3;

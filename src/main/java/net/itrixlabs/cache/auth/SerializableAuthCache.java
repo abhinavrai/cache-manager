@@ -16,17 +16,24 @@
  */
 package net.itrixlabs.cache.auth;
 
+import static net.itrixlabs.cache.config.CacheType.AUTH;
 import static org.springframework.security.core.SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
-import net.itrixlabs.cache.config.CacheType;
 import net.itrixlabs.cache.core.AbstractFileSystemCache;
 
 /**
  * <p>
- * Efficient implementation of <code>ApplicationCache</code> for authorization sub-systems.
+ * Simple implementation of <code>ApplicationCache</code> for authorization sub-systems.
+ * </p>
+ * <p>
+ * Authorization providers can simply invoke an instance of this class in order to utilize its
+ * caching capabilities. Authorization specific customizations can be added in future. Anyways, the
+ * API is closed for modification (to prevent harm you might cause to your application) but open for
+ * extension.
  * </p>
  * 
  * @author Abhinav Rai
+ * @see AbstractFileSystemCache
  * @since November 11<sup>th</sup>, 2015
  *
  */
@@ -34,12 +41,34 @@ public class SerializableAuthCache<V> extends AbstractFileSystemCache<V> {
 
     private static final long serialVersionUID = SERIAL_VERSION_UID;
 
-    public SerializableAuthCache(CacheType type) {
-	super(type);
+    /**
+     * <p>
+     * Constructs a <code>SerializableAuthCache</code>. Sensible defaults will be used for required
+     * parameters unless explicitly set. An application can typically have several instances of auth
+     * cache to store different types of auth tokens (for example, a scenario with multiple
+     * authentication/authorization providers using different user details services).
+     * </p>
+     */
+    public SerializableAuthCache() {
+	super(AUTH);
     }
 
-    public SerializableAuthCache(CacheType type, String cacheDir, String cacheFile) {
-	super(type, cacheDir, cacheFile);
+    /**
+     * <p>
+     * Constructs a <code>SerializableAuthCache</code> with the given type of auth token, the cache
+     * storage directory and cache file name. Provides better control on caching strategy out of the
+     * box. An application can typically have several instances of auth cache to store different
+     * types of auth tokens (for example, a scenario with multiple authentication/authorization
+     * providers using different user details services).
+     * </p>
+     * 
+     * @param cacheDir
+     *            the cache directory location to use
+     * @param cacheFile
+     *            the cache file name
+     */
+    public SerializableAuthCache(String cacheDir, String cacheFile) {
+	super(AUTH, cacheDir, cacheFile);
     }
 
     @Override

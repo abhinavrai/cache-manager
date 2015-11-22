@@ -16,9 +16,9 @@
  */
 package net.itrixlabs.cache.user;
 
+import static net.itrixlabs.cache.config.CacheType.USER;
 import static org.springframework.security.core.SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
-import net.itrixlabs.cache.config.CacheType;
 import net.itrixlabs.cache.core.AbstractFileSystemCache;
 
 /**
@@ -34,12 +34,35 @@ public class SerializableUserCache<V> extends AbstractFileSystemCache<V> {
 
     private static final long serialVersionUID = SERIAL_VERSION_UID;
 
-    public SerializableUserCache(CacheType type) {
-	super(type);
+    /**
+     * <p>
+     * Constructs a <code>SerializableUserCache</code>. Sensible defaults will be used for required
+     * parameters unless explicitly set. An application can typically have several instances of user
+     * cache to store different types of user details (for example, a scenario with multiple
+     * authentication/authorization providers using different user details services).
+     * </p>
+     * 
+     */
+    public SerializableUserCache() {
+	super(USER);
     }
 
-    public SerializableUserCache(CacheType type, String cacheDir, String cacheFile) {
-	super(type, cacheDir, cacheFile);
+    /**
+     * <p>
+     * Constructs a <code>SerializableUserCache</code> with the given type of user details, the
+     * cache storage directory and cache file name. Provides better control on caching strategy out
+     * of the box. An application can typically have several instances of user cache to store
+     * different types of user details (for example, a scenario with multiple
+     * authentication/authorization providers using different user details services).
+     * </p>
+     * 
+     * @param cacheDir
+     *            the cache directory location to use
+     * @param cacheFile
+     *            the cache file name
+     */
+    public SerializableUserCache(String cacheDir, String cacheFile) {
+	super(USER, cacheDir, cacheFile);
     }
 
     @Override

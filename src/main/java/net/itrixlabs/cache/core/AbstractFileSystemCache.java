@@ -68,12 +68,12 @@ public abstract class AbstractFileSystemCache<V> implements ApplicationCache<Key
     /*
      * Specifies the TTL of an entry in the cache
      */
-    private Long ttl = DEFAULT_TTL;
+    protected Long ttl = DEFAULT_TTL;
 
     /*
      * TimeUnit for the ttl period
      */
-    private TimeUnit ttlUnit = DEFAULT_TTL_TIMEUNIT;
+    protected TimeUnit ttlUnit = DEFAULT_TTL_TIMEUNIT;
 
     /*
      * Represents the directory for setting-up the cache directory
@@ -92,6 +92,10 @@ public abstract class AbstractFileSystemCache<V> implements ApplicationCache<Key
 
     protected final ConcurrentMap<Key, V> cache = new ConcurrentHashMap<>();
 
+    /**
+     * This constructor should not be used for invoking a cache. Instead, one should use the variant
+     * which takes a <code>CacheType</code> argument at-least.
+     */
     public AbstractFileSystemCache() {
 
 	//@formatter:off
@@ -103,11 +107,39 @@ public abstract class AbstractFileSystemCache<V> implements ApplicationCache<Key
 	//@formatter:on
     }
 
+    /**
+     * <p>
+     * Constructs an <code>AbstractFileSystemCache</code> with the given type of auth token.
+     * Sensible defaults will be used for other required parameters unless explicitly set. An
+     * application can typically have several instances of auth cache to store different types of
+     * auth tokens (for example, a scenario with multiple authentication/authorization providers
+     * using different user details services).
+     * </p>
+     * 
+     * @param type
+     *            the cache type to use
+     */
     public AbstractFileSystemCache(CacheType type) {
 	this(type, System.getProperty("user.dir") + File.separatorChar + "temp" + File.separatorChar
 		+ "app_cache", type.toString() + ".ser");
     }
 
+    /**
+     * <p>
+     * Constructs an <code>AbstractFileSystemCache</code> with the given type of auth token, the
+     * cache storage directory and cache file name. Provides better control on caching strategy out
+     * of the box. An application can typically have several instances of auth cache to store
+     * different types of auth tokens (for example, a scenario with multiple
+     * authentication/authorization providers using different user details services).
+     * </p>
+     * 
+     * @param type
+     *            the cache type to use
+     * @param cacheDir
+     *            the cache directory to use
+     * @param cacheFile
+     *            the cache filename to use
+     */
     public AbstractFileSystemCache(CacheType type, String cacheDir, String cacheFile) {
 	this.type = type;
 	this.cacheDir = cacheDir;
@@ -157,6 +189,18 @@ public abstract class AbstractFileSystemCache<V> implements ApplicationCache<Key
 	}
     }
 
+    /**
+     * <p>
+     * A native strategy to generate the cache key. Uses the key identifier and current time stamp
+     * (as creation time) and should be enough for almost everything. However, if you crave to
+     * override it, you may!
+     * </p>
+     * 
+     * @param identifier
+     *            the key identifier to set
+     * @return the <code>Key</code> typically an instance of <code>CacheKey</code> for use as key
+     *         for a cache entry
+     */
     protected Key generate(Object identifier) {
 	Key key = new CacheKey();
 	key.setKey(identifier);
@@ -197,32 +241,20 @@ public abstract class AbstractFileSystemCache<V> implements ApplicationCache<Key
 
     /**
      * <p>
-     * Sets the time-to-live for an entry in cache.
+     * Sets the time-to-live &amp; the time unit for cache entry time-to-live strategy (applicable
+     * to each entry in the cache).
      * </p>
      * 
      * @param ttl
      *            the ttl to set
-     * @return <code>AbstractFileSystemCache</code> for further customization
-     */
-    public AbstractFileSystemCache<V> setTtl(Long ttl) {
-	Assert.assertNotNull(ttl, "Can't accept null as TTL.");
-	this.ttl = ttl;
-	return this;
-    }
-
-    /**
-     * <p>
-     * Sets the time unit for cache entry time-to-live strategy.
-     * </p>
-     * 
      * @param ttlUnit
      *            the ttl time unit to set
-     * @return <code>AbstractFileSystemCache</code> for further customization
      */
-    public AbstractFileSystemCache<V> setTtlUnit(TimeUnit ttlUnit) {
+    public void setTtl(Long ttl, TimeUnit ttlUnit) {
+	Assert.assertNotNull(ttl, "Can't accept null as TTL.");
 	Assert.assertNotNull(ttlUnit, "Can't accept null as TTL TimeUnit.");
+	this.ttl = ttl;
 	this.ttlUnit = ttlUnit;
-	return this;
     }
 
     /**
@@ -232,12 +264,10 @@ public abstract class AbstractFileSystemCache<V> implements ApplicationCache<Key
      * 
      * @param cacheDir
      *            the cache directory location to use
-     * @return <code>AbstractFileSystemCache</code> for further customization
      */
-    public AbstractFileSystemCache<V> setCacheDir(String cacheDir) {
+    public void setCacheDir(String cacheDir) {
 	Assert.assertNotEmpty(cacheDir, "A cache directory location is required.");
 	this.cacheDir = cacheDir;
-	return this;
     }
 
     /**
@@ -247,11 +277,31 @@ public abstract class AbstractFileSystemCache<V> implements ApplicationCache<Key
      * 
      * @param cacheFile
      *            the cache filename to use
-     * @return <code>AbstractFileSystemCache</code> for further customization
      */
-    public AbstractFileSystemCache<V> setCacheFile(String cacheFile) {
+    public void setCacheFile(String cacheFile) {
 	Assert.assertNotEmpty(cacheFile, "A cache filename is required.");
 	this.cacheFile = cacheFile;
-	return this;
+    }
+
+    /**
+     * <p>
+     * Returns the set time-to-live for the entries in cache.
+     * </p>
+     * 
+     * @return the ttl for entries in cache
+     */
+    public Long getTtl() {
+	return this.ttl;
+    }
+
+    /**
+     * <p>
+     * Returns the set time-to-live time unit for the entries in cache.
+     * </p>
+     * 
+     * @return the ttl time unit for entries in cache
+     */
+    public TimeUnit getTtlUnit() {
+	return this.ttlUnit;
     }
 }

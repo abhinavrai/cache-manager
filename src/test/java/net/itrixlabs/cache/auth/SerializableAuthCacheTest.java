@@ -1,20 +1,16 @@
 package net.itrixlabs.cache.auth;
 
-import static net.itrixlabs.cache.config.CacheType.AUTH;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.AuthorityUtils;
 
-import net.itrixlabs.cache.auth.SerializableAuthCache;
-
 public class SerializableAuthCacheTest {
 
     //@formatter:off
     private SerializableAuthCache<UsernamePasswordAuthenticationToken> authCache = 
-	    new SerializableAuthCache<>(AUTH);
+	    new SerializableAuthCache<>();
     //@formatter:on
 
     private UsernamePasswordAuthenticationToken actualToken1, actualToken2, actualToken3;
@@ -53,6 +49,7 @@ public class SerializableAuthCacheTest {
 	Assert.assertEquals("Token wasn't inserted in cache", actualToken3.getPrincipal(),
 		authCache.getFromCache(keyLong3).getPrincipal());
 	authCache.evictFromCache(keyLong3);
-	Assert.assertEquals("Token wasn't evicted from cache", null, authCache.getFromCache(keyLong3));
+	Assert.assertEquals("Token wasn't evicted from cache", null,
+		authCache.getFromCache(keyLong3));
     }
 }

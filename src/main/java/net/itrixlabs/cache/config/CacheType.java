@@ -27,7 +27,20 @@ package net.itrixlabs.cache.config;
  */
 public enum CacheType {
 
-    AUTH, CSRF, USER;
+    /**
+     * Represents an Authentication/Authorization cache.
+     */
+    AUTH,
+
+    /**
+     * Represents a CSRF cache.
+     */
+    CSRF,
+
+    /**
+     * Represents a Spring Security styled <code>UserDetails</code> object.
+     */
+    USER;
 
     public String toString() {
 	return name().toLowerCase();

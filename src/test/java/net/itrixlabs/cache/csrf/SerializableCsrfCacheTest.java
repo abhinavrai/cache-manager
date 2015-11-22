@@ -1,7 +1,5 @@
 package net.itrixlabs.cache.csrf;
 
-import static net.itrixlabs.cache.config.CacheType.CSRF;
-
 import java.util.UUID;
 
 import org.junit.Assert;
@@ -14,7 +12,7 @@ public class SerializableCsrfCacheTest {
 
     //@formatter:off
     private SerializableCsrfCache<SynchronizerCsrfToken> csrfCache = 
-	    new SerializableCsrfCache<>(CSRF);
+	    new SerializableCsrfCache<>();
     //@formatter:on
 
     private SynchronizerCsrfToken actualToken1, actualToken2, actualToken3;

@@ -16,6 +16,17 @@
  */
 package net.itrixlabs.cache.config;
 
+/**
+ * <p>
+ * Implements <code>Key</code> interface to provide key management services mainly the management
+ * framework.
+ * </p>
+ * 
+ * @author Abhinav Rai
+ * @see Key
+ * @since November 12<sup>th</sup>, 2015
+ *
+ */
 public class CacheKey implements Key {
 
     private Object key;

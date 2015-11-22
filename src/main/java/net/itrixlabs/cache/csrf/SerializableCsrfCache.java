@@ -16,9 +16,9 @@
  */
 package net.itrixlabs.cache.csrf;
 
+import static net.itrixlabs.cache.config.CacheType.CSRF;
 import static org.springframework.security.core.SpringSecurityCoreVersion.SERIAL_VERSION_UID;
 
-import net.itrixlabs.cache.config.CacheType;
 import net.itrixlabs.cache.core.AbstractFileSystemCache;
 
 /**
@@ -34,12 +34,31 @@ public class SerializableCsrfCache<V> extends AbstractFileSystemCache<V> {
 
     private static final long serialVersionUID = SERIAL_VERSION_UID;
 
-    public SerializableCsrfCache(CacheType type) {
-	super(type);
+    /**
+     * <p>
+     * Constructs a <code>SerializableCsrfCache</code>. Sensible defaults will be used for required
+     * parameters unless explicitly set.
+     * </p>
+     * 
+     */
+    public SerializableCsrfCache() {
+	super(CSRF);
     }
 
-    public SerializableCsrfCache(CacheType type, String cacheDir, String cacheFile) {
-	super(type, cacheDir, cacheFile);
+    /**
+     * <p>
+     * Constructs a <code>SerializableCsrfCache</code> with the given type of auth token, the cache
+     * storage directory and cache file name. Provides better control on caching strategy out of the
+     * box.
+     * </p>
+     * 
+     * @param cacheDir
+     *            the cache directory location to use
+     * @param cacheFile
+     *            the cache file name
+     */
+    public SerializableCsrfCache(String cacheDir, String cacheFile) {
+	super(CSRF, cacheDir, cacheFile);
     }
 
     @Override
