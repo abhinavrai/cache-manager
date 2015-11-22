@@ -112,22 +112,6 @@ public class SerializableCacheManager<U, A, C> implements CacheManager {
 
     /**
      * <p>
-     * Registers a Cache management worker thread for efficiently managing the provided cache to the
-     * worker thread.
-     * </p>
-     * 
-     * @param cacheManagementWorker
-     *            the cache management execution worker thread to use
-     * @return <code>SerializableCacheManager</code> for further customization
-     */
-    public SerializableCacheManager<U, A, C> setCacheManagementWorker(
-	    SerializableCacheManagementWorker<U, A, C> cacheManagementWorker) {
-	this.serializableCacheManagementWorker = cacheManagementWorker;
-	return this;
-    }
-
-    /**
-     * <p>
      * Registers the user cache with the worker.
      * </p>
      * 
