@@ -75,9 +75,9 @@ public abstract interface ApplicationCache<Key, V> extends InitializingBean, Dis
      * {@link java.lang.Long} or {@link java.lang.String} or a custom type as long as it abides by
      * the contract defined by the {@link net.itrixlabs.cache.config.Key} interface, i.e., the key
      * should be uniquely identifiable using its value and not the <code>Key</code> instance as
-     * whole. In short, you must override the {@link #equals(Object)} and {@link #hashCode()}
-     * methods of that particular key type to make sure your identifier can be uniquely
-     * distinguished from with-in the cache.</i>
+     * whole. In short, you must override the {@link Object#equals(Object)} and
+     * {@link Object#hashCode()} methods of that particular key type to make sure your identifier
+     * can be uniquely distinguished from with-in the cache.</i>
      * </p>
      * 
      * @param key
@@ -98,9 +98,9 @@ public abstract interface ApplicationCache<Key, V> extends InitializingBean, Dis
      * {@link java.lang.Long} or {@link java.lang.String} or a custom type as long as it abides by
      * the contract defined by the {@link net.itrixlabs.cache.config.Key} interface, i.e., the key
      * should be uniquely identifiable using its value and not the <code>Key</code> instance as
-     * whole. In short, you must override the {@link #equals(Object)} and {@link #hashCode()}
-     * methods of that particular key type to make sure your identifier can be uniquely
-     * distinguished from with-in the cache.</i>
+     * whole. In short, you must override the {@link Object#equals(Object)} and
+     * {@link Object#hashCode()} methods of that particular key type to make sure your identifier
+     * can be uniquely distinguished from with-in the cache.</i>
      * </p>
      * 
      * @param key
@@ -126,9 +126,9 @@ public abstract interface ApplicationCache<Key, V> extends InitializingBean, Dis
      * {@link java.lang.Long} or {@link java.lang.String} or a custom type as long as it abides by
      * the contract defined by the {@link net.itrixlabs.cache.config.Key} interface, i.e., the key
      * should be uniquely identifiable using its value and not the <code>Key</code> instance as
-     * whole. In short, you must override the {@link #equals(Object)} and {@link #hashCode()}
-     * methods of that particular key type to make sure your identifier can be uniquely
-     * distinguished from with-in the cache.</i>
+     * whole. In short, you must override the {@link Object#equals(Object)} and
+     * {@link Object#hashCode()} methods of that particular key type to make sure your identifier
+     * can be uniquely distinguished from with-in the cache.</i>
      * </p>
      *
      * @param key
