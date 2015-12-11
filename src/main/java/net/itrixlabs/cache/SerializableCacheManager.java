@@ -16,6 +16,7 @@
  */
 package net.itrixlabs.cache;
 
+import static java.lang.Runtime.getRuntime;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 import java.util.concurrent.Executors;
@@ -65,7 +66,7 @@ public class SerializableCacheManager<U, A, C> implements CacheManager {
      */
     public SerializableCacheManager() {
 	this.cacheManagementExecutor = (ScheduledThreadPoolExecutor) Executors
-		.newScheduledThreadPool(10);
+		.newScheduledThreadPool(getRuntime().availableProcessors());
 	this.serializableCacheManagementWorker = new SerializableCacheManagementWorker<>();
     }
 

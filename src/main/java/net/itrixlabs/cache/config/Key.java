@@ -18,6 +18,7 @@ package net.itrixlabs.cache.config;
 
 import static java.util.concurrent.TimeUnit.DAYS;
 
+import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
 import net.itrixlabs.cache.core.ApplicationCache;
@@ -28,13 +29,21 @@ import net.itrixlabs.cache.core.ApplicationCache;
  * worry only about key's name and TTL related values. Others may be used internally, unless
  * specified otherwise.
  * </p>
+ * <p>
+ * Any implementing class must override the {@link Object#equals(Object)} and
+ * {@link Object#hashCode()} for this key to work efficiently as the cache manager sits on top of
+ * Java's collection framework. This is mandatory so that entries can be reliably set/retrieved
+ * to/from the cache Failing to do so will have unexpected results. My suggestion! use an already
+ * provided implementation and don't look for creating your own. It's safe, reliable and unit
+ * tested!
+ * </p>
  * 
  * @author Abhinav Rai
  * @see ApplicationCache
  * @since November 12<sup>th</sup>, 2015
  *
  */
-public interface Key {
+public interface Key extends Serializable {
 
     String DEFAULT_KEY_STRING = "KEY";
 
