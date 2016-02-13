@@ -14,13 +14,14 @@ public class SerializableAuthCacheTest {
     //@formatter:on
 
     private UsernamePasswordAuthenticationToken actualToken1, actualToken2, actualToken3;
-    private Long keyLong1, keyLong2, keyLong3;
+    private Long keyLong1, keyLong2, keyLong3, keyLong4;
 
     @Before
     public void setup() {
 	keyLong1 = System.nanoTime() + (-110345734834L);
 	keyLong2 = System.nanoTime() * (-33L);
 	keyLong3 = System.nanoTime() + (110343434834L);
+	keyLong4 = System.nanoTime() + (-234565433L);
 	actualToken1 = new UsernamePasswordAuthenticationToken("user1", "creds1",
 		AuthorityUtils.commaSeparatedStringToAuthorityList("AUTH1"));
 	actualToken2 = new UsernamePasswordAuthenticationToken("user2", "creds2",
@@ -51,5 +52,13 @@ public class SerializableAuthCacheTest {
 	authCache.evictFromCache(keyLong3);
 	Assert.assertEquals("Token wasn't evicted from cache", null,
 		authCache.getFromCache(keyLong3));
+    }
+
+    @Test
+    public void isPresentInCache() {
+	Assert.assertEquals("Key wasn't present in cache", true,
+		authCache.isPresentInCache(keyLong1));
+	Assert.assertEquals("Key was present in cache", false,
+		authCache.isPresentInCache(keyLong4));
     }
 }

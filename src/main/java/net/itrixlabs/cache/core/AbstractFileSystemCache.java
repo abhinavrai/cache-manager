@@ -209,6 +209,11 @@ public abstract class AbstractFileSystemCache<V> implements ApplicationCache<Key
     }
 
     @Override
+    public boolean isPresentInCache(Object key) {
+	return cache.containsKey(this.generate(key));
+    }
+
+    @Override
     public void flush() {
 	long ttlMillis = ttlUnit.toMillis(ttl);
 	Iterator<Key> iter = this.cache.keySet().iterator();

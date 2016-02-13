@@ -148,5 +148,27 @@ public abstract interface ApplicationCache<Key, V> extends InitializingBean, Dis
      * required (manually just means that extra code is required for the same).
      * </p>
      */
+
+    /**
+     * <p>
+     * Checks the application cache on which the method is called for the specified key and returns
+     * true if the condition is true, else false.
+     * </p>
+     * <p>
+     * <b><i>Important:</i></b>&nbsp;<i>Note that you may use any well known java type as key like
+     * {@link java.lang.Long} or {@link java.lang.String} or a custom type as long as it abides by
+     * the contract defined by the {@link net.itrixlabs.cache.config.Key} interface, i.e., the key
+     * should be uniquely identifiable using its value and not the <code>Key</code> instance as
+     * whole. In short, you must override the {@link Object#equals(Object)} and
+     * {@link Object#hashCode()} methods of that particular key type to make sure your identifier
+     * can be uniquely distinguished from with-in the cache.</i>
+     * </p>
+     * 
+     * @param key
+     *            the key to be tested for presence in the cache
+     * @return true if the key exists, else false (an exception must never be thrown)
+     */
+    boolean isPresentInCache(Object key);
+
     void flush();
 }

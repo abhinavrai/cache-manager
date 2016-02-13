@@ -16,13 +16,14 @@ public class SerializableCsrfCacheTest {
     //@formatter:on
 
     private SynchronizerCsrfToken actualToken1, actualToken2, actualToken3;
-    private String value, identifier, keyString1, keyString2, keyString3;
+    private String value, identifier, keyString1, keyString2, keyString3, keyString4;
 
     @Before
     public void setup() {
 	keyString1 = UUID.randomUUID().toString();
 	keyString2 = UUID.randomUUID().toString();
 	keyString3 = UUID.randomUUID().toString();
+	keyString4 = UUID.randomUUID().toString();
 	value = UUID.randomUUID().toString();
 	identifier = value.split("-")[0];
 	actualToken1 = new SynchronizerCsrfToken(identifier, value);
@@ -56,5 +57,13 @@ public class SerializableCsrfCacheTest {
 	csrfCache.evictFromCache(keyString3);
 	Assert.assertEquals("Token wasn't evicted from cache", null,
 		csrfCache.getFromCache(keyString3));
+    }
+
+    @Test
+    public void isPresentInCache() {
+	Assert.assertEquals("Key wasn't present in cache", true,
+		csrfCache.isPresentInCache(keyString1));
+	Assert.assertEquals("Key was present in cache", false,
+		csrfCache.isPresentInCache(keyString4));
     }
 }

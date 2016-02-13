@@ -1,10 +1,14 @@
 *.class
 
+/bin
 /target/
+/bin/
 /temp/
 /.classpath
-/.project
-/.settings/
+
+# Required to prevent spooked faces 
+# /.project
+#/.settings/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

@@ -1,4 +1,4 @@
-package net.itrixlabs.cache.user;
+package net.itrixlabs.cache.generic;
 
 import java.util.UUID;
 
@@ -8,9 +8,9 @@ import org.junit.Test;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 
-public class SerializableUserCacheTest {
+public class SerializableGenericCacheTest {
 
-    private SerializableUserCache<User> userCache = new SerializableUserCache<>();
+    private SerializableGenericCache<User> genericCache = new SerializableGenericCache<>();
 
     private User actualUser1, actualUser2, actualUser3;
     private String keyString1, keyString2, keyString3, keyString4;
@@ -27,37 +27,37 @@ public class SerializableUserCacheTest {
 		AuthorityUtils.commaSeparatedStringToAuthorityList("AUTH2"));
 	actualUser3 = new User("user3", "password", true, true, true, true,
 		AuthorityUtils.commaSeparatedStringToAuthorityList("AUTH3"));
-	userCache.putInCache(keyString1, actualUser1);
+	genericCache.putInCache(keyString1, actualUser1);
     }
 
     @Test
     public void getFromCache() {
 	Assert.assertEquals("Not the same user", actualUser1.getUsername(),
-		userCache.getFromCache(keyString1).getUsername());
+		genericCache.getFromCache(keyString1).getUsername());
     }
 
     @Test
     public void putInCache() {
-	userCache.putInCache(keyString2, actualUser2);
+	genericCache.putInCache(keyString2, actualUser2);
 	Assert.assertEquals("Not the same user", actualUser2.getUsername(),
-		userCache.getFromCache(keyString2).getUsername());
+		genericCache.getFromCache(keyString2).getUsername());
     }
 
     @Test
     public void evictFromCache() {
-	userCache.putInCache(keyString3, actualUser3);
+	genericCache.putInCache(keyString3, actualUser3);
 	Assert.assertEquals("User wasn't inserted in cache", actualUser3.getUsername(),
-		userCache.getFromCache(keyString3).getUsername());
-	userCache.evictFromCache(keyString3);
+		genericCache.getFromCache(keyString3).getUsername());
+	genericCache.evictFromCache(keyString3);
 	Assert.assertEquals("User wasn't evicted from cache", null,
-		userCache.getFromCache(keyString3));
+		genericCache.getFromCache(keyString3));
     }
 
     @Test
     public void isPresentInCache() {
 	Assert.assertEquals("Key wasn't present in cache", true,
-		userCache.isPresentInCache(keyString1));
+		genericCache.isPresentInCache(keyString1));
 	Assert.assertEquals("Key was present in cache", false,
-		userCache.isPresentInCache(keyString4));
+		genericCache.isPresentInCache(keyString4));
     }
 }

@@ -28,6 +28,7 @@ import org.apache.commons.logging.LogFactory;
 import net.itrixlabs.cache.auth.SerializableAuthCache;
 import net.itrixlabs.cache.core.CacheManager;
 import net.itrixlabs.cache.csrf.SerializableCsrfCache;
+import net.itrixlabs.cache.generic.SerializableGenericCache;
 import net.itrixlabs.cache.user.SerializableUserCache;
 import net.itrixlabs.cache.util.Assert;
 
@@ -48,17 +49,18 @@ import net.itrixlabs.cache.util.Assert;
  * @since November 13<sup>th</sup>, 2015
  *
  */
-public class SerializableCacheManager<U, A, C> implements CacheManager {
+public class SerializableCacheManager<U, A, C, G> implements CacheManager {
 
     private static final Log logger = LogFactory.getLog(SerializableCacheManager.class);
 
     private SerializableUserCache<U> userCache;
     private SerializableAuthCache<A> authCache;
     private SerializableCsrfCache<C> csrfCache;
+    private SerializableGenericCache<G> genericCache;
 
     private ScheduledThreadPoolExecutor cacheManagementExecutor;
 
-    private SerializableCacheManagementWorker<U, A, C> serializableCacheManagementWorker;
+    private SerializableCacheManagementWorker<U, A, C, G> serializableCacheManagementWorker;
 
     /**
      * Constructs an instance of cache manager as <code>SerializableCacheManager</code>. This
@@ -76,6 +78,7 @@ public class SerializableCacheManager<U, A, C> implements CacheManager {
 	this.serializableCacheManagementWorker.setAuthCache(this.authCache);
 	this.serializableCacheManagementWorker.setUserCache(this.userCache);
 	this.serializableCacheManagementWorker.setCsrfCache(this.csrfCache);
+	this.serializableCacheManagementWorker.setGenericCache(this.genericCache);
 
 	Assert.assertNotNull(cacheManagementExecutor,
 		"Cache management executor is not initialized!");
@@ -145,5 +148,17 @@ public class SerializableCacheManager<U, A, C> implements CacheManager {
      */
     public void setCsrfCache(SerializableCsrfCache<C> csrfCache) {
 	this.csrfCache = csrfCache;
+    }
+
+    /**
+     * <p>
+     * Registers the generic cache with the worker.
+     * </p>
+     * 
+     * @param genericCache
+     *            the generic cache to be managed
+     */
+    public void setGenericCache(SerializableGenericCache<G> genericCache) {
+	this.genericCache = genericCache;
     }
 }

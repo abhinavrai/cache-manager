@@ -18,7 +18,8 @@ package net.itrixlabs.cache.config;
 
 /**
  * <p>
- * Named constants describing the types of caches supported by the cache manager out of the box.
+ * Named constants describing the types of caches supported by the cache manager
+ * out of the box.
  * </p>
  * 
  * @author Abhinav Rai
@@ -27,22 +28,28 @@ package net.itrixlabs.cache.config;
  */
 public enum CacheType {
 
-    /**
-     * Represents an Authentication/Authorization cache.
-     */
-    AUTH,
+	/**
+	 * Represents an Authentication/Authorization cache.
+	 */
+	AUTH,
 
-    /**
-     * Represents a CSRF cache.
-     */
-    CSRF,
+	/**
+	 * Represents a CSRF cache.
+	 */
+	CSRF,
 
-    /**
-     * Represents a Spring Security styled <code>UserDetails</code> object.
-     */
-    USER;
+	/**
+	 * Represents a Spring Security styled <code>UserDetails</code> object.
+	 */
+	USER,
 
-    public String toString() {
-	return name().toLowerCase();
-    };
+	/**
+	 * Represents a Generic cache object provided the manager is being used for
+	 * a non-differential use.
+	 */
+	GENERIC;
+
+	public String toString() {
+		return name().toLowerCase();
+	};
 }
